@@ -68,3 +68,35 @@ agebox
 
 ```
 
+
+Now we will make some changes and get those pushed to github
+```{r}
+#we'll start by finding the percentage of males and females by class
+#first we'll look at the class of sex (we already know class is a factor)
+
+class(titanic$Sex)
+#it's a character, so let's convert it to factor (create a new factor variable)
+
+titanic$Sex.factor<-as.factor(titanic$Sex)
+
+#check the class again
+class(titanic$Sex.factor)
+#now it's factor!
+
+#make a contingency table with passenger class and sex (both as factors)
+table1<-table(titanic$Pclass.factor, titanic$Sex.factor)
+
+#view the table to make sure it looks right (provides counts)
+table1
+
+#now lets get row percentages to see how the three classes of passengers are split between males and females
+testtable <- table1 / rowSums(table1) * 100
+
+#now lets view that table to make sure it produced what we wanted
+testtable
+
+#It does! If we wanted to see a table that shows percentages across all six categories (male and female, across all three classes, all summing to 100%), we could do this:
+prop.table(table(titanic$Pclass.factor,titanic$Sex.factor))
+
+#But this is slightly less interesting (in my humble opinion), because it is trickier to see the meaningful differences in distributions by sex between classes. 
+
